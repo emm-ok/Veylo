@@ -1,5 +1,7 @@
 import express from "express";
 import cors from "cors";
+import fs from "fs";
+import path from "path";
 
 import { clerkMiddleware } from "@clerk/express";
 
@@ -9,6 +11,7 @@ import { connectDB } from "./config/db.js";
 const app = express();
 
 const PORT = env.PORT || 3000;
+const publicDir = path.join(process.cwd(), "public");
 
 app.use(express.json());
 app.use(cors({ origin: env.CLIENT_URL, credentials: true }));
@@ -17,6 +20,14 @@ app.use(clerkMiddleware());
 app.get("/api/health", (req, res) => {
   res.status(200).json({ ok: true });
 });
+
+if (fs.existsSync(publicDir)) {
+  app.use(express.static(publicDir));
+
+  app.get("/{*any}", (req, res, next) => {
+    res.sendFile(path.join(publicDir, "index.html"), (err) => next(err));
+  });
+}
 
 app.listen(PORT, () => {
   connectDB();
