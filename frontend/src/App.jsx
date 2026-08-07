@@ -6,17 +6,12 @@ import { Toaster } from "react-hot-toast";
 import { useEffect } from 'react';
 import ChatPage from './pages/ChatPage';
 import AuthPage from './pages/AuthPage';
+import PageLoader from './components/PageLoader';
 
 const App = () => {
   const { isSignedIn, isLoaded } = useAuth();
 
-
-  // useEffect(() => {
-  //   if (!isLoaded) return;
-
-  //   if (!isSignedIn) checkAuth();
-  //   else clearAuth();
-  // }, [checkAuth, clearAuth, isLoaded, isSignedIn]);
+  if (!isLoaded) return <PageLoader />;
 
   return (
     <ThemeProvider>
