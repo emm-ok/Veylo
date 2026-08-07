@@ -16,15 +16,16 @@ const app = express();
 const PORT = env.PORT || 3000;
 const publicDir = path.join(process.cwd(), "public");
 
-app.use(express.json());
-app.use(cors({ origin: env.CLIENT_URL, credentials: true }));
-app.use(clerkMiddleware());
-
 app.use(
   "/api/webhooks/clerk",
   express.raw({ type: "application/json" }),
   clerkWebhook,
 );
+
+app.use(express.json());
+app.use(cors({ origin: env.CLIENT_URL, credentials: true }));
+app.use(clerkMiddleware());
+
 
 app.get("/api/health", (req, res) => {
   res.status(200).json({ ok: true });
