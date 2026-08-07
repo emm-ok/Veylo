@@ -5,4 +5,5 @@ export const env = {
     PORT: process.env.PORT,
     CLIENT_URL: process.env.CLIENT_URL,
     MONGO_URI: process.env.MONGO_URI,
+    CLERK_WEBHOOK_SIGNING_SECRET: process.env.CLERK_WEBHOOK_SIGNING_SECRET,
 }

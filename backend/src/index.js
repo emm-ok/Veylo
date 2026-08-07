@@ -9,6 +9,8 @@ import { env } from "./config/env.js";
 import { connectDB } from "./config/db.js";
 import job from "./config/cron.js";
 
+import clerkWebhook from "./webhooks/clerk.webhook.js";
+
 const app = express();
 
 const PORT = env.PORT || 3000;
@@ -17,6 +19,12 @@ const publicDir = path.join(process.cwd(), "public");
 app.use(express.json());
 app.use(cors({ origin: env.CLIENT_URL, credentials: true }));
 app.use(clerkMiddleware());
+
+app.use(
+  "/api/webhooks/clerk",
+  express.raw({ type: "application/json" }),
+  clerkWebhook,
+);
 
 app.get("/api/health", (req, res) => {
   res.status(200).json({ ok: true });
@@ -34,5 +42,5 @@ app.listen(PORT, () => {
   connectDB();
   console.log(`Server is running on port: ${PORT}`);
 
-  if(env.NODE_ENV === "production") job.start();
+  if (env.NODE_ENV === "production") job.start();
 });
