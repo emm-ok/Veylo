@@ -2,7 +2,7 @@
 
 # --- Stage 1: build the SPA (Vite) ---
 # Produces static HTML/JS/CSS under frontend/dist.
-FROM node:22-bookworm-slim AS frontend-build
+FROM node:22-alpine AS frontend-build
 WORKDIR /app/frontend
 COPY frontend/package.json frontend/package-lock.json ./
 RUN npm install --no-audit --no-fund --legacy-peer-deps
@@ -16,7 +16,7 @@ RUN npm run build
 
 # --- Stage 2: build the API bundle ---
 # This backend is ESM JavaScript, so npm run build copies src/ to dist/.
-FROM node:22-bookworm-slim AS backend-build
+FROM node:22-alpine AS backend-build
 WORKDIR /app
 COPY backend/package.json backend/package-lock.json ./
 RUN npm install --no-audit --no-fund
@@ -25,7 +25,7 @@ RUN npm run build
 
 # --- Stage 3: runtime image (only prod deps + built assets) ---
 # Express serves API routes and static files from public/.
-FROM node:22-bookworm-slim AS runner
+FROM node:22-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 ENV PORT=3001

@@ -3,7 +3,6 @@ import { ThemeProvider } from './context/ThemeContext'
 import { WallpaperProvider } from './context/WallpaperContext'
 import { Routes, Route, Navigate } from "react-router";
 import { Toaster } from "react-hot-toast";
-import { useEffect } from 'react';
 import ChatPage from './pages/ChatPage';
 import AuthPage from './pages/AuthPage';
 import PageLoader from './components/PageLoader';
