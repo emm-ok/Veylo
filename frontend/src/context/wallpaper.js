@@ -2,7 +2,7 @@ import { createContext, useContext } from "react";
 
 export const WallpaperContext = createContext(null);
 
-export function useWallpaper() {
+export const useWallpaper = () => {
   const ctx = useContext(WallpaperContext);
 
   if (!ctx) {

@@ -10,7 +10,7 @@ import { useAuthStore } from './store/useAuthStore';
 import { useEffect } from 'react';
 
 const App = () => {
-  const { isSignedIn, isLoaded } = useAuth();
+  const { isSignedIn, isLoaded, getToken } = useAuth();
 
   const clearAuth = useAuthStore((state) => state.clearAuth);
   const checkAuth = useAuthStore((state) => state.checkAuth);
@@ -21,7 +21,7 @@ const App = () => {
 
     if (isSignedIn) checkAuth();
     else clearAuth();
-  }, [checkAuth, clearAuth, isLoaded, isSignedIn]);
+  }, [checkAuth, clearAuth, getToken, isLoaded, isSignedIn]);
 
   if (!isLoaded || (isSignedIn && isCheckingAuth)) return <PageLoader />;
 
